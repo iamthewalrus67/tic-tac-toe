@@ -7,12 +7,6 @@
 
 #include "game_board.h"
 
-enum STATE {
-    PLAYING,
-    FIRST_PLAYER_WON,
-    SECOND_PLAYER_WON,
-    TIE
-};
 
 class game_manager_t {
 public:
@@ -25,7 +19,6 @@ public:
     ~game_manager_t() = default;
 
     void game_loop();
-    int check_state();
     void handle_error(const std::string & message);
 private:
     int current_player = FIRST_PLAYER;

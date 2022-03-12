@@ -21,8 +21,21 @@ std::string game_board_t::to_string() {
 }
 
 void game_board_t::set_cell(int index, int player) {
-    --free_cells;
+    if (player == EMPTY) {
+        ++free_cells;
+    } else {
+        --free_cells;
+    }
     this->board[(index-1)/3][(index-1)%3] = player;
+}
+
+void game_board_t::set_cell(int x, int y, int player) {
+    if (player == EMPTY) {
+        ++free_cells;
+    } else {
+        --free_cells;
+    }
+    this->board[x][y] = player;
 }
 
 int game_board_t::get_cell(int index) const {
@@ -39,4 +52,78 @@ bool game_board_t::is_cell_free(int index) const {
 
 bool game_board_t::is_full() const {
     return free_cells == 0;
+}
+
+int game_board_t::check_state() const {
+    // Check column
+    for (int i = 0; i < 3; ++i) {
+        int player = get_cell(i, 0);
+        if (player == EMPTY) {
+            continue;
+        }
+
+        for (int j = 1; j < 3; ++j) {
+            if (player != get_cell(i, j)) {
+                break;
+            }
+
+            if (j == 2) {
+                if (player == FIRST_PLAYER) {
+                    return FIRST_PLAYER_WON;
+                } else {
+                    return SECOND_PLAYER_WON;
+                }
+            }
+        }
+    }
+
+    // Check row
+    for (int i = 0; i < 3; ++i) {
+        int player = get_cell(0, i);
+        if (player == EMPTY) {
+            continue;
+        }
+
+        for (int j = 1; j < 3; ++j) {
+            if (player != get_cell(j, i)) {
+                break;
+            }
+
+            if (j == 2) {
+                if (player == FIRST_PLAYER) {
+                    return FIRST_PLAYER_WON;
+                } else {
+                    return SECOND_PLAYER_WON;
+                }
+            }
+        }
+    }
+
+    // Check diag
+    int player;
+    if ((player = get_cell(0, 0)) != EMPTY) {
+        if (get_cell(1, 1) == player && get_cell(2, 2) == player) {
+            if (player == FIRST_PLAYER) {
+                return FIRST_PLAYER_WON;
+            } else {
+                return SECOND_PLAYER_WON;
+            }
+        }
+    }
+
+    if ((player = get_cell(0, 2)) != EMPTY) {
+        if (get_cell(1, 1) == player && get_cell(2, 0) == player) {
+            if (player == FIRST_PLAYER) {
+                return FIRST_PLAYER_WON;
+            } else {
+                return SECOND_PLAYER_WON;
+            }
+        }
+    }
+
+    if (is_full()) {
+        return TIE;
+    }
+
+    return PLAYING;
 }

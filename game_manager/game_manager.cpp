@@ -10,10 +10,10 @@ void game_manager_t::game_loop() {
     int state;
     std::cout << board.to_string() << std::endl;
 
-    human_player_t first_player;
-    computer_random_player_t second_player;
+    human_player_t first_player(FIRST_PLAYER);
+    computer_minimax_player_t second_player(SECOND_PLAYER);
 
-    while ((state = check_state()) == PLAYING) {
+    while ((state = board.check_state()) == PLAYING) {
         std::cout << "Your turn. Choose a cell on the grid." << std::endl;
         int cell_num = 0;
         while (!(1 <= cell_num && cell_num <= 9)) {
@@ -48,83 +48,11 @@ void game_manager_t::game_loop() {
 
     if (state == FIRST_PLAYER_WON) {
         std::cout << "First player has won!" << std::endl;
-    } else {
+    } else if (state == SECOND_PLAYER) {
         std::cout << "Second player has won!" << std::endl;
+    } else {
+        std::cout << "Tie!" << std::endl;
     }
-}
-
-int game_manager_t::check_state() {
-    if (board.is_full()) {
-        return TIE;
-    }
-
-    // Check column
-    for (int i = 0; i < 3; ++i) {
-        int player = board.get_cell(i, 0);
-        if (player == EMPTY) {
-            continue;
-        }
-
-        for (int j = 1; j < 3; ++j) {
-            if (player != board.get_cell(i, j)) {
-                break;
-            }
-
-            if (j == 2) {
-                if (player == FIRST_PLAYER) {
-                    return FIRST_PLAYER_WON;
-                } else {
-                    return SECOND_PLAYER_WON;
-                }
-            }
-        }
-    }
-
-    // Check row
-    for (int i = 0; i < 3; ++i) {
-        int player = board.get_cell(0, i);
-        if (player == EMPTY) {
-            continue;
-        }
-
-        for (int j = 1; j < 3; ++j) {
-            if (player != board.get_cell(j, i)) {
-                break;
-            }
-
-            if (j == 2) {
-                if (player == FIRST_PLAYER) {
-                    return FIRST_PLAYER_WON;
-                } else {
-                    return SECOND_PLAYER_WON;
-                }
-            }
-        }
-    }
-
-    // Check diag
-    int player = EMPTY;
-    if ((player = board.get_cell(0, 0)) != EMPTY) {
-        if (board.get_cell(1, 1) == player && board.get_cell(2, 2) == player) {
-            if (player == FIRST_PLAYER) {
-                return FIRST_PLAYER_WON;
-            } else {
-                return SECOND_PLAYER_WON;
-            }
-        }
-    }
-
-    if ((player = board.get_cell(0, 2)) != EMPTY) {
-        if (board.get_cell(1, 1) == player && board.get_cell(2, 0) == player) {
-            if (player == FIRST_PLAYER) {
-                return FIRST_PLAYER_WON;
-            } else {
-                return SECOND_PLAYER_WON;
-            }
-        }
-    }
-
-    return PLAYING;
 }
 
 void game_manager_t::handle_error(const std::string & message) {

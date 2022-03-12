@@ -9,7 +9,10 @@
 
 class player_t {
 protected:
-    player_t() = default;
+    player_t() = delete;
+    player_t(int player_num);
+
+    int player_num;
 public:
     player_t(const player_t&) = default;
     player_t& operator=(const player_t&) = delete;
@@ -22,7 +25,8 @@ public:
 
 class human_player_t: public player_t {
 public:
-    human_player_t() = default;
+    human_player_t() = delete;
+    human_player_t(int player_num);
 
     human_player_t(const human_player_t&) = default;
     human_player_t& operator=(const human_player_t&) = delete;
@@ -35,7 +39,20 @@ public:
 
 class computer_random_player_t: public player_t {
 public:
-    int choose_cell(const game_board_t & board);
+    computer_random_player_t() = delete;
+    computer_random_player_t(int player_num);
+
+    int choose_cell(const game_board_t & board) override;
+};
+
+class computer_minimax_player_t: public player_t {
+public:
+    computer_minimax_player_t() = delete;
+    computer_minimax_player_t(int player_num);
+
+    int choose_cell(const game_board_t & board) override;
+private:
+    int minimax(game_board_t & board, int depth, bool is_maximizing);
 };
 
 #endif //TIC_TAC_TOE_PLAYERS_H

@@ -14,6 +14,13 @@ enum GRID {
     SECOND_PLAYER
 };
 
+enum STATE {
+    PLAYING,
+    FIRST_PLAYER_WON,
+    SECOND_PLAYER_WON,
+    TIE
+};
+
 class game_board_t {
 public:
     game_board_t() = default;
@@ -26,10 +33,12 @@ public:
 
     std::string to_string();
     void set_cell(int index, int player);
+    void set_cell(int x, int y, int player);
     int get_cell(int index) const;
     int get_cell(int x, int y) const;
     bool is_cell_free(int index) const;
     bool is_full() const;
+    int check_state() const;
 private:
     int board[3][3] = {};
     std::unordered_map<int, std::string> symbols {{ EMPTY, "_" }, { FIRST_PLAYER, "X" }, { SECOND_PLAYER, "O" }};
