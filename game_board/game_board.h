@@ -26,10 +26,10 @@ public:
 
     std::string to_string();
     void set_cell(int index, int player);
-    int get_cell(int index);
-    int get_cell(int x, int y);
-    bool is_cell_free(int index);
-    bool is_full();
+    int get_cell(int index) const;
+    int get_cell(int x, int y) const;
+    bool is_cell_free(int index) const;
+    bool is_full() const;
 private:
     int board[3][3] = {};
     std::unordered_map<int, std::string> symbols {{ EMPTY, "_" }, { FIRST_PLAYER, "X" }, { SECOND_PLAYER, "O" }};

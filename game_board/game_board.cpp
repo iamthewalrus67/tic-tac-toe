@@ -25,18 +25,18 @@ void game_board_t::set_cell(int index, int player) {
     this->board[(index-1)/3][(index-1)%3] = player;
 }
 
-int game_board_t::get_cell(int index) {
+int game_board_t::get_cell(int index) const {
     return this->board[(index-1)/3][(index-1)%3];
 }
 
-int game_board_t::get_cell(int x, int y) {
+int game_board_t::get_cell(int x, int y) const {
     return this->board[x][y];
 }
 
-bool game_board_t::is_cell_free(int index) {
+bool game_board_t::is_cell_free(int index) const {
     return this->board[(index-1)/3][(index-1)%3] == EMPTY;
 }
 
-bool game_board_t::is_full() {
+bool game_board_t::is_full() const {
     return free_cells == 0;
 }

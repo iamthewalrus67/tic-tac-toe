@@ -22,5 +22,7 @@ int computer_random_player_t::choose_cell(const game_board_t &board) {
     std::mt19937 gen(rand_device());
     std::uniform_int_distribution<> distribution(1, 10);
 
-    return distribution(gen);
+    int cell_num;
+    while (!board.is_cell_free(cell_num = distribution(gen)));
+    return cell_num;
 }
