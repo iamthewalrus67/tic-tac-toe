@@ -3,18 +3,30 @@
 #include "players.h"
 #include <fmt/core.h>
 
+
+tic_tac_toe_t::tic_tac_toe_t(base_player_t *first_player, base_player_t *second_player) {
+    this->first_player = first_player;
+    this->second_player = second_player;
+}
+
+tic_tac_toe_t::~tic_tac_toe_t() {
+    delete first_player;
+    delete second_player;
+}
+
 /*
  * Main method which runs the game.
  */
-void tic_tac_toe_t::next_turn(const base_player_t & first_player, const base_player_t & second_player) {
+//void tic_tac_toe_t::next_turn(const base_player_t & first_player, const base_player_t & second_player) {
+void tic_tac_toe_t::next_turn() {
     int cell_num = 0;
     while (!(1 <= cell_num && cell_num <= 9)) {
         if (current_player == FIRST_PLAYER) {
             std::cout << "First player's turn:" << std::endl;
-            cell_num = first_player.choose_cell(board);
+            cell_num = first_player->choose_cell(board);
         } else {
             std::cout << "Second player's turn:" << std::endl;
-            cell_num = second_player.choose_cell(board);
+            cell_num = second_player->choose_cell(board);
         }
 
         if (!(1 <= cell_num && cell_num <= 9) || std::cin.fail()) {
@@ -56,7 +68,10 @@ int tic_tac_toe_t::check_state() {
     return board.check_state();
 }
 
+/*
+ * Print explanation for the controls.
+ */
 void tic_tac_toe_t::print_rules() {
     std::cout << fmt::format("|{}|{}|{}|\n|{}|{}|{}|\n|{}|{}|{}|\n", 1, 2, 3, 4, 5, 6, 7, 8, 9);
-    std::cout << "Enter a number from 1 to 9 to choose a corresponding cell on the board." << std::endl;
+    std::cout << "Enter a number from 1 to 9 to choose a corresponding cell on the board." << std::endl << std::endl;
 }

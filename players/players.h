@@ -14,12 +14,6 @@ protected:
 public:
     base_player_t() = delete;
 
-    base_player_t(const base_player_t&) = default;
-    base_player_t& operator=(const base_player_t&) = delete;
-    base_player_t(base_player_t&&) = default;
-    base_player_t& operator=(base_player_t&&) = delete;
-    ~base_player_t() = default;
-
     void set_player_num(int player_num);
 
     virtual int choose_cell(const game_board_t & board) const;
@@ -29,12 +23,6 @@ class human_player_t: public base_player_t {
 public:
     human_player_t() = delete;
     explicit human_player_t(int player_num);
-
-    human_player_t(const human_player_t&) = default;
-    human_player_t& operator=(const human_player_t&) = delete;
-    human_player_t(human_player_t&&) = default;
-    human_player_t& operator=(human_player_t&&) = delete;
-    ~human_player_t() = default;
 
     int choose_cell(const game_board_t & board) const override;
 };

@@ -5,22 +5,23 @@
 
 /*
  * Set player equal to some player chosen by the user.
- * P.S. Couldn't think of a better way to create an object depending on user input :(
  */
-void choose_player(base_player_t* & player, int player_num) {
+base_player_t* choose_player(int player_num) {
     std::cout << "h - human, cr - computer, using random, cm - computer, using minimax." << std::endl;
     std::cout << "Choose player " << player_num << ":" << std::endl;
+
+    base_player_t* player = nullptr;
 
     while (true) {
         std::string player_choice;
         std::cin >> player_choice;
 
         if (player_choice == "h") {
-            player = new human_player_t(player_num);
+            player = new (std::nothrow) human_player_t(player_num);
         } else if (player_choice == "cr") {
-            player = new computer_random_player_t(player_num);
+            player = new (std::nothrow) computer_random_player_t(player_num);
         } else if (player_choice == "cm") {
-            player = new computer_minimax_player_t(player_num);
+            player = new (std::nothrow) computer_minimax_player_t(player_num);
         } else {
             std::cout << "Choose a valid option. h - human, cr - computer, using random, cm - computer, using minimax." << std::endl;
             continue;
@@ -33,26 +34,22 @@ void choose_player(base_player_t* & player, int player_num) {
         std::cerr << "Couldn't allocate memory." << std::endl;
         exit(MEMORY_ALLOCATION_ERROR);
     }
+
+    return player;
 }
 
 int main() {
-    base_player_t* first_player = nullptr;
-    base_player_t* second_player = nullptr;
+    base_player_t* first_player = choose_player(FIRST_PLAYER);
+    base_player_t* second_player = choose_player(SECOND_PLAYER);
 
-    choose_player(first_player, FIRST_PLAYER);
-    choose_player(second_player, SECOND_PLAYER);
-
-    tic_tac_toe_t game;
+    tic_tac_toe_t game(first_player, second_player);
 
     game.print_rules();
 
     int state;
     while ((state = game.check_state()) == PLAYING) {
-        game.next_turn(*first_player, *second_player);
+        game.next_turn();
     }
-
-    delete first_player;
-    delete second_player;
 
     if (state == FIRST_PLAYER_WON) {
         std::cout << "First player has won!" << std::endl;

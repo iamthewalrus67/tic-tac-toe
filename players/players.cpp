@@ -1,6 +1,7 @@
 #include "players.h"
 #include <iostream>
 #include <random>
+#include "exit_codes.h"
 
 base_player_t::base_player_t(int player_num) {
     this->player_num = player_num;
@@ -73,6 +74,11 @@ int computer_minimax_player_t::choose_cell(const game_board_t &board) const {
  * Return "score" of a board at the given state using the Minimax algorithm.
  */
 int computer_minimax_player_t::minimax(game_board_t* board, bool is_maximizing) const {
+    if (!board) {
+        std::cerr << "Tried to dereference a nullptr" << std::endl;
+        exit(NULL_POINTER_DEREFERENCE_ERROR);
+    }
+
     auto state = board->check_state();
 
     if ((state == FIRST_PLAYER_WON && player_num == FIRST_PLAYER) || (state == SECOND_PLAYER_WON && player_num == SECOND_PLAYER)) {
