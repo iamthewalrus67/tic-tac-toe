@@ -44,6 +44,8 @@ int main() {
 
     tic_tac_toe_t game;
 
+    game.print_rules();
+
     int state;
     while ((state = game.check_state()) == PLAYING) {
         game.next_turn(*first_player, *second_player);

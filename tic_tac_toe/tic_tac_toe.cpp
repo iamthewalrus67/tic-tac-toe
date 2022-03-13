@@ -58,5 +58,5 @@ int tic_tac_toe_t::check_state() {
 
 void tic_tac_toe_t::print_rules() {
     std::cout << fmt::format("|{}|{}|{}|\n|{}|{}|{}|\n|{}|{}|{}|\n", 1, 2, 3, 4, 5, 6, 7, 8, 9);
-    std::cout << "Choose one of the cells to place your symbol" << std::endl;
+    std::cout << "Enter a number from 1 to 9 to choose a corresponding cell on the board." << std::endl;
 }
