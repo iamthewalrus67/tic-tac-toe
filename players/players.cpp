@@ -75,8 +75,8 @@ int computer_minimax_player_t::choose_cell(const game_board_t &board) const {
  */
 int computer_minimax_player_t::minimax(game_board_t* board, bool is_maximizing) const {
     if (!board) {
-        std::cerr << "Tried to dereference a nullptr" << std::endl;
-        exit(NULL_POINTER_DEREFERENCE_ERROR);
+        std::cerr << "nullptr was passed to computer_minimax_player_t::minimax" << std::endl;
+        exit(NULL_POINTER_PASS_ERROR);
     }
 
     auto state = board->check_state();

@@ -2,9 +2,15 @@
 #include <iostream>
 #include "players.h"
 #include <fmt/core.h>
+#include "exit_codes.h"
 
 
 tic_tac_toe_t::tic_tac_toe_t(base_player_t *first_player, base_player_t *second_player) {
+    if (!first_player || !second_player) {
+        std::cerr << "nullptr was passed to tic_tac_toe_t constructor" << std::endl;
+        exit(NULL_POINTER_PASS_ERROR);
+    }
+
     this->first_player = first_player;
     this->second_player = second_player;
 }
