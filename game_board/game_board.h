@@ -1,7 +1,3 @@
-//
-// Created by iamthewalrus on 3/12/22.
-//
-
 #ifndef TIC_TAC_TOE_GAME_BOARD_H
 #define TIC_TAC_TOE_GAME_BOARD_H
 
@@ -32,16 +28,24 @@ public:
     ~game_board_t() = default;
 
     std::string to_string();
+
     void set_cell(int index, int player);
     void set_cell(int x, int y, int player);
     int get_cell(int index) const;
     int get_cell(int x, int y) const;
+
     bool is_cell_free(int index) const;
+    bool is_cell_free(int x, int y) const;
     bool is_full() const;
+
     int check_state() const;
 private:
     int board[3][3] = {};
-    std::unordered_map<int, std::string> symbols {{ EMPTY, "_" }, { FIRST_PLAYER, "X" }, { SECOND_PLAYER, "O" }};
+    std::unordered_map<int, std::string> symbols {
+        { EMPTY, "_" },
+        { FIRST_PLAYER, "X" },
+        { SECOND_PLAYER, "O" }
+    };
     int free_cells = 9;
 };
 

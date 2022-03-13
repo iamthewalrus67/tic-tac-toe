@@ -1,32 +1,34 @@
-//
-// Created by iamthewalrus on 3/12/22.
-//
-
 #ifndef TIC_TAC_TOE_PLAYERS_H
 #define TIC_TAC_TOE_PLAYERS_H
 
 #include "game_board.h"
 
-class player_t {
+/*
+ * Base class for all player classes.
+ */
+class base_player_t {
 protected:
-    player_t() = delete;
-    player_t(int player_num);
+    explicit base_player_t(int player_num);
 
     int player_num;
 public:
-    player_t(const player_t&) = default;
-    player_t& operator=(const player_t&) = delete;
-    player_t(player_t&&) = default;
-    player_t& operator=(player_t&&) = delete;
-    ~player_t() = default;
+    base_player_t() = delete;
 
-    virtual int choose_cell(const game_board_t & board);
+    base_player_t(const base_player_t&) = default;
+    base_player_t& operator=(const base_player_t&) = delete;
+    base_player_t(base_player_t&&) = default;
+    base_player_t& operator=(base_player_t&&) = delete;
+    ~base_player_t() = default;
+
+    void set_player_num(int player_num);
+
+    virtual int choose_cell(const game_board_t & board) const;
 };
 
-class human_player_t: public player_t {
+class human_player_t: public base_player_t {
 public:
     human_player_t() = delete;
-    human_player_t(int player_num);
+    explicit human_player_t(int player_num);
 
     human_player_t(const human_player_t&) = default;
     human_player_t& operator=(const human_player_t&) = delete;
@@ -34,25 +36,25 @@ public:
     human_player_t& operator=(human_player_t&&) = delete;
     ~human_player_t() = default;
 
-    int choose_cell(const game_board_t & board) override;
+    int choose_cell(const game_board_t & board) const override;
 };
 
-class computer_random_player_t: public player_t {
+class computer_random_player_t: public base_player_t {
 public:
     computer_random_player_t() = delete;
-    computer_random_player_t(int player_num);
+    explicit computer_random_player_t(int player_num);
 
-    int choose_cell(const game_board_t & board) override;
+    int choose_cell(const game_board_t & board) const override;
 };
 
-class computer_minimax_player_t: public player_t {
+class computer_minimax_player_t: public base_player_t {
 public:
     computer_minimax_player_t() = delete;
-    computer_minimax_player_t(int player_num);
+    explicit computer_minimax_player_t(int player_num);
 
-    int choose_cell(const game_board_t & board) override;
+    int choose_cell(const game_board_t & board) const override;
 private:
-    int minimax(game_board_t & board, int depth, bool is_maximizing);
+    int minimax(game_board_t* board, bool is_maximizing) const;
 };
 
 #endif //TIC_TAC_TOE_PLAYERS_H
