@@ -4,7 +4,7 @@
 #include "exit_codes.h"
 
 /*
- * Set player equal to some player chosen by the user.
+ * Return pointer to player object created dependent on user input.
  */
 base_player_t* choose_player(int player_num) {
     std::cout << "h - human, cr - computer, using random, cm - computer, using minimax." << std::endl;
@@ -23,7 +23,7 @@ base_player_t* choose_player(int player_num) {
         } else if (player_choice == "cm") {
             player = new (std::nothrow) computer_minimax_player_t(player_num);
         } else {
-            std::cout << "Choose a valid option. h - human, cr - computer, using random, cm - computer, using minimax." << std::endl;
+            std::cout << "Choose a valid option! h - human, cr - computer, using random, cm - computer, using minimax." << std::endl;
             continue;
         }
 
