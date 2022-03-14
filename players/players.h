@@ -14,8 +14,6 @@ protected:
 public:
     base_player_t() = delete;
 
-    void set_player_num(int player_num);
-
     virtual int choose_cell(const game_board_t & board) const;
 };
 

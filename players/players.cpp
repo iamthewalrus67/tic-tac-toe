@@ -7,10 +7,6 @@ base_player_t::base_player_t(int player_num) {
     this->player_num = player_num;
 }
 
-void base_player_t::set_player_num(int player_num) {
-    this->player_num = player_num;
-}
-
 human_player_t::human_player_t(int player_num): base_player_t(player_num) {}
 
 computer_random_player_t::computer_random_player_t(int player_num): base_player_t(player_num) {}
